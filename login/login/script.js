@@ -57,7 +57,7 @@ async function validaFrmLogin() {
 
     // Se não corresponder, exibe uma mensagem de erro
     alert("Usuário ou senha inválidos. Tente novamente.");
-    alert(senhaCriptografada);
+    // alert(senhaCriptografada);
     return false;
 }
 
