@@ -1,7 +1,8 @@
 // Dados de usuários (apenas para demonstração)
+
 var usuarios = [
-    { nomeusuario: "user1", senha: "password", email: "user1@example.com" },
-    { nomeusuario: "user2", senha: "password", email: "user2@example.com" }
+    { nomeusuario: "user1", senha: "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4", email: "user1@example.com" },
+    { nomeusuario: "user2", senha: "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5", email: "user2@example.com" }
 ];
 
 async function validaFrmLogin() {
@@ -14,27 +15,27 @@ async function validaFrmLogin() {
     Este objeto é usado para converter strings em sequências de bytes 
     usando uma determinada codificação (nesse caso, provavelmente UTF-8).
     */
-    const encoder = new TextEncoder(); 
+    const encoder = new TextEncoder();
 
     /*
     //Usamos o método encode() do TextEncoder para converter a string 
     senhaInformada em uma matriz de bytes, que é armazenada na constante data.
     */
-    const data = encoder.encode(senhaInformada); 
+    const data = encoder.encode(senhaInformada);
 
     /*
     // Utilizamos a API crypto.subtle.digest() para gerar um hash criptográfico 
     da matriz de bytes data. Neste caso, o algoritmo de hash usado é SHA-256. 
     O resultado é armazenado em um buffer, que é uma representação binária do hash.
     */
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data); 
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
 
     /*
     Convertendo o hashBuffer (que é uma matriz de bytes) em uma matriz de números 
     inteiros de 8 bits sem sinal (Uint8Array) e, em seguida, 
     convertendo isso para um array JavaScript com o método Array.from(). Isso é feito para poder manipular facilmente os bytes do hash.
     */
-    const hashArray = Array.from(new Uint8Array(hashBuffer)); 
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
 
     /*
     Estamos mapeando cada byte do hash para uma representação hexadecimal, 
@@ -44,17 +45,19 @@ async function validaFrmLogin() {
     formar a senha criptografada.
     */
     const senhaCriptografada = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-       
+
     // Verifica se o usuário e senha correspondem a um registro na matriz
     for (var i = 0; i < usuarios.length; i++) {
+
         if (usuarioInformado === usuarios[i].nomeusuario && senhaCriptografada === usuarios[i].senha) {
             alert("Login bem-sucedido!");
             return true;
         }
     }
-    
+
     // Se não corresponder, exibe uma mensagem de erro
     alert("Usuário ou senha inválidos. Tente novamente.");
+    alert(senhaCriptografada);
     return false;
 }
 
@@ -79,7 +82,8 @@ async function validafrmCadastroUsuario() {
 
     // Adiciona os dados do novo usuário à matriz
     usuarios.push({ nomeusuario: usuarioInformado, senha: senhaCriptografada, email: emailInformado });
-    
+    localStorage; 
+
     // Se tudo estiver correto, exibe uma mensagem de sucesso
     alert("Cadastro realizado com sucesso!");
     return true;
